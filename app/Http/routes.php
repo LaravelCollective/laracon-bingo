@@ -13,6 +13,24 @@
 
 Route::get('/', function () {
     return view('index');
+})->middleware('auth');
+
+Route::get('login', function () {
+    return view('auth.login');
+})->middleware('guest');
+
+Route::group([
+  'prefix'    => 'auth',
+  'namespace' => 'Auth',
+], function () {
+    Route::get('redirect', 'SocialiteController@redirectToProvider')->middleware('guest');
+    Route::get('logout', 'SocialiteController@logout')->middleware('auth');
+    Route::get('github', 'SocialiteController@github')->middleware('guest');
+    Route::get('facebook', 'SocialiteController@facebook')->middleware('guest');
 });
 
-Route::get('/api/terms', 'TermsController@index');
+Route::group([
+  'prefix' => 'api',
+], function () {
+    Route::get('api/terms', 'TermsController@index');
+});
