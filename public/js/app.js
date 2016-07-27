@@ -14551,13 +14551,17 @@ var _NavBar = require('./components/NavBar.vue');
 
 var _NavBar2 = _interopRequireDefault(_NavBar);
 
+var _Bingo = require('./components/Bingo.vue');
+
+var _Bingo2 = _interopRequireDefault(_Bingo);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = {
-    components: { NavBar: _NavBar2.default }
+    components: { NavBar: _NavBar2.default, Bingo: _Bingo2.default }
 };
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div>\n    <nav-bar></nav-bar>\n</div>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div>\n    <nav-bar></nav-bar>\n    <bingo></bingo>\n</div>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
@@ -14568,7 +14572,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update("_v-645de743", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"./components/NavBar.vue":10,"vue":5,"vue-hot-reload-api":2}],8:[function(require,module,exports){
+},{"./components/Bingo.vue":10,"./components/NavBar.vue":11,"vue":5,"vue-hot-reload-api":2}],8:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -14696,13 +14700,49 @@ $vm.app(_App2.default).start('#app');
 
 },{"./App.vue":7,"./SPA":8}],10:[function(require,module,exports){
 var __vueify_insert__ = require("vueify/lib/insert-css")
+var __vueify_style__ = __vueify_insert__.insert("\n#bingo {\n    margin-top: 65px;\n}\n")
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.default = {
+    computed: {
+        user: function user() {
+            return window.User;
+        },
+        terms: function terms() {
+            return this.user.terms;
+        }
+    }
+};
+if (module.exports.__esModule) module.exports = module.exports.default
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"container\" id=\"bingo\">\n    <div class=\"row text-xs-center\">\n        <div class=\"col-xs\">B</div>\n        <div class=\"col-xs\">I</div>\n        <div class=\"col-xs\">N</div>\n        <div class=\"col-xs\">G</div>\n        <div class=\"col-xs\">O</div>\n    </div>\n</div>\n"
+if (module.hot) {(function () {  module.hot.accept()
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), true)
+  if (!hotAPI.compatible) return
+  module.hot.dispose(function () {
+    __vueify_insert__.cache["\n#bingo {\n    margin-top: 65px;\n}\n"] = false
+    document.head.removeChild(__vueify_style__)
+  })
+  if (!module.hot.data) {
+    hotAPI.createRecord("_v-67914484", module.exports)
+  } else {
+    hotAPI.update("_v-67914484", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
+  }
+})()}
+},{"vue":5,"vue-hot-reload-api":2,"vueify/lib/insert-css":6}],11:[function(require,module,exports){
+var __vueify_insert__ = require("vueify/lib/insert-css")
 var __vueify_style__ = __vueify_insert__.insert("\n.navbar-brand>img {\n    max-height: 24px;\n}\n")
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
-exports.default = {};
+exports.default = {
+    //
+};
 if (module.exports.__esModule) module.exports = module.exports.default
 ;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<nav class=\"navbar navbar-light bg-faded navbar-fixed-top\">\n    <a class=\"navbar-brand\" href=\"https://laravelcollective.com\" target=\"_blank\">\n        <img src=\"/img/full-logo.png\" alt=\"Laravel Collective\" class=\"img-responsive\">\n    </a>\n    <ul class=\"nav navbar-nav\">\n        <li class=\"nav-item\">\n            <a class=\"nav-link\" href=\"#\">Home</a>\n        </li>\n    </ul>\n    <ul class=\"nav navbar-nav pull-xs-right\">\n        <li class=\"nav-item\">\n            <a href=\"/auth/logout\" class=\"nav-link\">Logout</a>\n        </li>\n    </ul>\n</nav>\n"
 if (module.hot) {(function () {  module.hot.accept()

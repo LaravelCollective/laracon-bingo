@@ -5,5 +5,8 @@
 @stop
 
 @section('scripts')
+    <script>
+        window.User = {!! auth()->user() !!};
+    </script>
     <script src="{{ elixir('js/app.js') }}"></script>
 @stop
