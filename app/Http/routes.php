@@ -32,5 +32,7 @@ Route::group([
 Route::group([
   'prefix' => 'api',
 ], function () {
-    Route::get('api/terms', 'TermsController@index');
+    Route::get('me', function() {
+        return auth()->user();
+    });
 });
