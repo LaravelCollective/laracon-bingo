@@ -79,6 +79,6 @@ class User extends Authenticatable
         $seed = preg_replace('/[^0-9]/', '', md5($this->email));
         $faker->seed($seed);
 
-        return Collection::make($faker->randomElements(Term::all()->all(), 25));
+        return Collection::make($faker->randomElements(Term::all()->all(), 24));
     }
 }

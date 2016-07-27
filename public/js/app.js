@@ -14701,11 +14701,18 @@ $vm.app(_App2.default).start('#app');
 },{"./App.vue":7,"./SPA":8}],10:[function(require,module,exports){
 var __vueify_insert__ = require("vueify/lib/insert-css")
 var __vueify_style__ = __vueify_insert__.insert("\n#bingo {\n    margin-top: 65px;\n}\n")
-"use strict";
+'use strict';
 
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
+
+var _Term = require('./Term.vue');
+
+var _Term2 = _interopRequireDefault(_Term);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 exports.default = {
     computed: {
         user: function user() {
@@ -14714,10 +14721,11 @@ exports.default = {
         terms: function terms() {
             return this.user.terms;
         }
-    }
+    },
+    components: { Term: _Term2.default }
 };
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"container\" id=\"bingo\">\n    <div class=\"row text-xs-center\">\n        <div class=\"col-xs\">B</div>\n        <div class=\"col-xs\">I</div>\n        <div class=\"col-xs\">N</div>\n        <div class=\"col-xs\">G</div>\n        <div class=\"col-xs\">O</div>\n    </div>\n</div>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"container\" id=\"bingo\">\n    <div class=\"row text-xs-center\">\n        <div class=\"col-xs\">B</div>\n        <div class=\"col-xs\">I</div>\n        <div class=\"col-xs\">N</div>\n        <div class=\"col-xs\">G</div>\n        <div class=\"col-xs\">O</div>\n    </div>\n    <div class=\"row text-xs-center\">\n        <term v-for=\"term in terms | limitBy 5\" :term=\"term\"></term>\n    </div>\n    <div class=\"row text-xs-center\">\n        <term v-for=\"term in terms | limitBy 5 5\" :term=\"term\"></term>\n    </div>\n    <div class=\"row text-xs-center\">\n        <term v-for=\"term in terms | limitBy 2 10\" :term=\"term\"></term>\n        <term :term=\"{term: 'FREE'}\"></term>\n        <term v-for=\"term in terms | limitBy 2 12\" :term=\"term\"></term>\n    </div>\n    <div class=\"row text-xs-center\">\n        <term v-for=\"term in terms | limitBy 5 14\" :term=\"term\"></term>\n    </div>\n    <div class=\"row text-xs-center\">\n        <term v-for=\"term in terms | limitBy 5 19\" :term=\"term\"></term>\n    </div>\n</div>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
@@ -14732,7 +14740,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update("_v-67914484", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"vue":5,"vue-hot-reload-api":2,"vueify/lib/insert-css":6}],11:[function(require,module,exports){
+},{"./Term.vue":12,"vue":5,"vue-hot-reload-api":2,"vueify/lib/insert-css":6}],11:[function(require,module,exports){
 var __vueify_insert__ = require("vueify/lib/insert-css")
 var __vueify_style__ = __vueify_insert__.insert("\n.navbar-brand>img {\n    max-height: 24px;\n}\n")
 "use strict";
@@ -14757,6 +14765,33 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.createRecord("_v-3d3cae2a", module.exports)
   } else {
     hotAPI.update("_v-3d3cae2a", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
+  }
+})()}
+},{"vue":5,"vue-hot-reload-api":2,"vueify/lib/insert-css":6}],12:[function(require,module,exports){
+var __vueify_insert__ = require("vueify/lib/insert-css")
+var __vueify_style__ = __vueify_insert__.insert("\n.term {\n    border: 1px solid red;\n}\n.term.checked {\n    border: 1px solid green;\n}\n")
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.default = {
+    props: ['term']
+};
+if (module.exports.__esModule) module.exports = module.exports.default
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"col-xs\">\n    <div class=\"term\" :class=\"term.checked ? 'checked' : ''\">\n        {{ term.term }}\n    </div>\n</div>\n"
+if (module.hot) {(function () {  module.hot.accept()
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), true)
+  if (!hotAPI.compatible) return
+  module.hot.dispose(function () {
+    __vueify_insert__.cache["\n.term {\n    border: 1px solid red;\n}\n.term.checked {\n    border: 1px solid green;\n}\n"] = false
+    document.head.removeChild(__vueify_style__)
+  })
+  if (!module.hot.data) {
+    hotAPI.createRecord("_v-007de827", module.exports)
+  } else {
+    hotAPI.update("_v-007de827", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
 },{"vue":5,"vue-hot-reload-api":2,"vueify/lib/insert-css":6}]},{},[9]);
