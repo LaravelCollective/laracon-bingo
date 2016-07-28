@@ -14700,7 +14700,7 @@ $vm.app(_App2.default).start('#app');
 
 },{"./App.vue":7,"./SPA":8}],10:[function(require,module,exports){
 var __vueify_insert__ = require("vueify/lib/insert-css")
-var __vueify_style__ = __vueify_insert__.insert("\n#bingo {\n    margin-top: 65px;\n}\n")
+var __vueify_style__ = __vueify_insert__.insert("\n#bingo {\n    margin-top: 65px;\n}\n.term-row {\n    margin-bottom: 15px;\n}\n")
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -14722,16 +14722,37 @@ exports.default = {
             return this.user.terms;
         }
     },
+    methods: {
+        row: function row(num) {
+            var start = num * 5;
+            var end = start + 5;
+
+            if (num >= 2) end--;
+            if (num >= 3) start--;
+
+            var terms = this.terms.slice(start, end);
+
+            if (num == 2) {
+                terms.splice(2, 0, {
+                    term: 'FREE',
+                    checked: true,
+                    locked: true
+                });
+            }
+
+            return terms;
+        }
+    },
     components: { Term: _Term2.default }
 };
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"container\" id=\"bingo\">\n    <div class=\"row text-xs-center\">\n        <div class=\"col-xs\">B</div>\n        <div class=\"col-xs\">I</div>\n        <div class=\"col-xs\">N</div>\n        <div class=\"col-xs\">G</div>\n        <div class=\"col-xs\">O</div>\n    </div>\n    <div class=\"row text-xs-center\">\n        <term v-for=\"term in terms | limitBy 5\" :term=\"term\"></term>\n    </div>\n    <div class=\"row text-xs-center\">\n        <term v-for=\"term in terms | limitBy 5 5\" :term=\"term\"></term>\n    </div>\n    <div class=\"row text-xs-center\">\n        <term v-for=\"term in terms | limitBy 2 10\" :term=\"term\"></term>\n        <term :term=\"{term: 'FREE'}\"></term>\n        <term v-for=\"term in terms | limitBy 2 12\" :term=\"term\"></term>\n    </div>\n    <div class=\"row text-xs-center\">\n        <term v-for=\"term in terms | limitBy 5 14\" :term=\"term\"></term>\n    </div>\n    <div class=\"row text-xs-center\">\n        <term v-for=\"term in terms | limitBy 5 19\" :term=\"term\"></term>\n    </div>\n</div>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"container\" id=\"bingo\">\n    <div class=\"row text-xs-center\">\n        <div class=\"col-xs\">B</div>\n        <div class=\"col-xs\">I</div>\n        <div class=\"col-xs\">N</div>\n        <div class=\"col-xs\">G</div>\n        <div class=\"col-xs\">O</div>\n    </div>\n    <div class=\"row text-xs-center term-row\" v-for=\"i in [0,1,2,3,4]\">\n        <term v-for=\"term in row(i)\" :term=\"term\"></term>\n    </div>\n</div>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
   if (!hotAPI.compatible) return
   module.hot.dispose(function () {
-    __vueify_insert__.cache["\n#bingo {\n    margin-top: 65px;\n}\n"] = false
+    __vueify_insert__.cache["\n#bingo {\n    margin-top: 65px;\n}\n.term-row {\n    margin-bottom: 15px;\n}\n"] = false
     document.head.removeChild(__vueify_style__)
   })
   if (!module.hot.data) {
@@ -14769,7 +14790,7 @@ if (module.hot) {(function () {  module.hot.accept()
 })()}
 },{"vue":5,"vue-hot-reload-api":2,"vueify/lib/insert-css":6}],12:[function(require,module,exports){
 var __vueify_insert__ = require("vueify/lib/insert-css")
-var __vueify_style__ = __vueify_insert__.insert("\n.term {\n    border: 1px solid red;\n}\n.term.checked {\n    border: 1px solid green;\n}\n")
+var __vueify_style__ = __vueify_insert__.insert("\n.term {\n    border: 1px solid red;\n    height: 15vh;\n}\n.term.checked {\n    border: 1px solid green;\n}\n")
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -14785,7 +14806,7 @@ if (module.hot) {(function () {  module.hot.accept()
   hotAPI.install(require("vue"), true)
   if (!hotAPI.compatible) return
   module.hot.dispose(function () {
-    __vueify_insert__.cache["\n.term {\n    border: 1px solid red;\n}\n.term.checked {\n    border: 1px solid green;\n}\n"] = false
+    __vueify_insert__.cache["\n.term {\n    border: 1px solid red;\n    height: 15vh;\n}\n.term.checked {\n    border: 1px solid green;\n}\n"] = false
     document.head.removeChild(__vueify_style__)
   })
   if (!module.hot.data) {

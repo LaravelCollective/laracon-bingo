@@ -16,6 +16,7 @@ export default {
 <style>
 .term {
     border: 1px solid red;
+    height: 15vh;
 }
 .term.checked {
     border: 1px solid green;

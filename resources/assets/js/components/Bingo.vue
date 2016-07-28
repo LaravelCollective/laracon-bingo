@@ -7,22 +7,8 @@
             <div class="col-xs">G</div>
             <div class="col-xs">O</div>
         </div>
-        <div class="row text-xs-center">
-            <term v-for="term in terms | limitBy 5" :term="term"></term>
-        </div>
-        <div class="row text-xs-center">
-            <term v-for="term in terms | limitBy 5 5" :term="term"></term>
-        </div>
-        <div class="row text-xs-center">
-            <term v-for="term in terms | limitBy 2 10" :term="term"></term>
-            <term :term="{term: 'FREE'}"></term>
-            <term v-for="term in terms | limitBy 2 12" :term="term"></term>
-        </div>
-        <div class="row text-xs-center">
-            <term v-for="term in terms | limitBy 5 14" :term="term"></term>
-        </div>
-        <div class="row text-xs-center">
-            <term v-for="term in terms | limitBy 5 19" :term="term"></term>
+        <div class="row text-xs-center term-row" v-for="i in [0,1,2,3,4]">
+            <term v-for="term in row(i)" :term="term"></term>
         </div>
     </div>
 </template>
@@ -37,6 +23,27 @@ export default {
             return this.user.terms
         }
     },
+    methods: {
+        row(num) {
+            let start = num*5
+            let end = start+5
+
+            if(num >= 2) end--
+            if(num >= 3) start--
+
+            let terms = this.terms.slice(start, end)
+
+            if(num == 2) {
+                terms.splice(2, 0, {
+                    term: 'FREE',
+                    checked: true,
+                    locked: true
+                })
+            }
+
+            return terms
+        }
+    },
     components: {Term}
 }
 </script>
@@ -44,5 +51,8 @@ export default {
 <style>
     #bingo {
         margin-top: 65px;
+    }
+    .term-row {
+        margin-bottom: 15px;
     }
 </style>
