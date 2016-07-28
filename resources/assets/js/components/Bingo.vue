@@ -48,7 +48,7 @@ export default {
 
             if(num == 2) {
                 terms.splice(2, 0, {
-                    name: 'FREE',
+                    name: '',
                     checked: true,
                     locked: true
                 })

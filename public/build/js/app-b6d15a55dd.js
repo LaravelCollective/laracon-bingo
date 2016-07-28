@@ -14747,7 +14747,7 @@ exports.default = {
 
             if (num == 2) {
                 terms.splice(2, 0, {
-                    name: 'FREE',
+                    name: '',
                     checked: true,
                     locked: true
                 });
@@ -14803,7 +14803,7 @@ if (module.hot) {(function () {  module.hot.accept()
 })()}
 },{"vue":5,"vue-hot-reload-api":2,"vueify/lib/insert-css":6}],12:[function(require,module,exports){
 var __vueify_insert__ = require("vueify/lib/insert-css")
-var __vueify_style__ = __vueify_insert__.insert("\n.term {\n    background-color: #f4645f;\n    color: #fff;\n    height: 15vh;\n    line-height: 15vh;\n    border-radius: 3px;\n}\n.term.checked {\n    background-color: #ccc;\n    text-transform: uppercase;\n}\n")
+var __vueify_style__ = __vueify_insert__.insert("\n.term {\n    background-color: #ccc;\n    color: #fff;\n    height: 15vh;\n    line-height: 15vh;\n    border-radius: 3px;\n    text-transform: uppercase;\n    cursor: pointer;\n}\n.term.checked {\n    background-color: #f4645f;\n}\n.term.locked {\n    background-image: url('/img/taylor_mug.png');\n    background-position: center center;\n    background-size: cover;\n}\n")
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -14811,6 +14811,21 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = {
     props: ['term'],
+    computed: {
+        termClasses: function termClasses() {
+            var classes = '';
+
+            if (this.term.checked) {
+                classes = classes + ' checked';
+            }
+
+            if (this.term.locked) {
+                classes = classes + ' locked';
+            }
+
+            return classes;
+        }
+    },
     methods: {
         toggleChecked: function toggleChecked() {
             var _this = this;
@@ -14826,13 +14841,13 @@ exports.default = {
     }
 };
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"col-xs\">\n    <div class=\"term\" :class=\"term.checked ? 'checked' : ''\" @click=\"toggleChecked\">\n        {{ term.name }}\n    </div>\n</div>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"col-xs\">\n    <div class=\"term\" :class=\"termClasses\" @click=\"toggleChecked\">\n        {{ term.name }}\n    </div>\n</div>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
   if (!hotAPI.compatible) return
   module.hot.dispose(function () {
-    __vueify_insert__.cache["\n.term {\n    background-color: #f4645f;\n    color: #fff;\n    height: 15vh;\n    line-height: 15vh;\n    border-radius: 3px;\n}\n.term.checked {\n    background-color: #ccc;\n    text-transform: uppercase;\n}\n"] = false
+    __vueify_insert__.cache["\n.term {\n    background-color: #ccc;\n    color: #fff;\n    height: 15vh;\n    line-height: 15vh;\n    border-radius: 3px;\n    text-transform: uppercase;\n    cursor: pointer;\n}\n.term.checked {\n    background-color: #f4645f;\n}\n.term.locked {\n    background-image: url('/img/taylor_mug.png');\n    background-position: center center;\n    background-size: cover;\n}\n"] = false
     document.head.removeChild(__vueify_style__)
   })
   if (!module.hot.data) {
