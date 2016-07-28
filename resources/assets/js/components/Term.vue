@@ -15,10 +15,14 @@ export default {
 
 <style>
 .term {
-    border: 1px solid red;
+    background-color: #f4645f;
+    color: #fff;
     height: 15vh;
+    line-height: 15vh;
+    border-radius: 3px;
 }
 .term.checked {
-    border: 1px solid green;
+    background-color: #ccc;
+    text-transform: uppercase;
 }
 </style>
