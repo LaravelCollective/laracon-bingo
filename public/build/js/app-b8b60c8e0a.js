@@ -14714,15 +14714,28 @@ var _Term2 = _interopRequireDefault(_Term);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = {
+    data: function data() {
+        return {
+            loading: false,
+            user: window.User
+        };
+    },
+
     computed: {
-        user: function user() {
-            return window.User;
-        },
         terms: function terms() {
             return this.user.terms;
         }
     },
     methods: {
+        reload: function reload() {
+            var _this = this;
+
+            this.loading = true;
+            this.$http.get('/api/me').then(function (response) {
+                _this.loading = false;
+                _this.user = response.json();
+            });
+        },
         row: function row(num) {
             var start = num * 5;
             var end = start + 5;

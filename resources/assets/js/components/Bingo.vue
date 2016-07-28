@@ -17,13 +17,26 @@
 import Term from './Term.vue'
 
 export default {
+    data() {
+        return {
+            loading: false,
+            user: window.User
+        }
+    },
     computed: {
-        user: () => window.User,
         terms() {
             return this.user.terms
         }
     },
     methods: {
+        reload() {
+            this.loading = true
+            this.$http.get('/api/me')
+                .then(response => {
+                    this.loading = false
+                    this.user = response.json()
+                })
+        },
         row(num) {
             let start = num*5
             let end = start+5
