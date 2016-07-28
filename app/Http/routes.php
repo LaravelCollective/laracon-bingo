@@ -15,6 +15,10 @@ Route::get('/', function () {
     return view('index');
 })->middleware('auth');
 
+Route::get('admin', function () {
+    return 'admin';
+})->middleware(['auth', 'can:admin']);
+
 Route::get('login', function () {
     return view('auth.login');
 })->middleware('guest');
@@ -32,7 +36,7 @@ Route::group([
 Route::group([
   'prefix' => 'api',
 ], function () {
-    Route::get('me', function() {
+    Route::get('me', function () {
         return auth()->user();
     });
 });
