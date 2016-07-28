@@ -20,8 +20,8 @@ Route::get('login', function () {
 })->middleware('guest');
 
 Route::group([
-  'prefix'    => 'auth',
-  'namespace' => 'Auth',
+    'prefix'    => 'auth',
+    'namespace' => 'Auth',
 ], function () {
     Route::get('redirect', 'SocialiteController@redirectToProvider')->middleware('guest');
     Route::get('logout', 'SocialiteController@logout')->middleware('auth');
@@ -30,9 +30,20 @@ Route::group([
 });
 
 Route::group([
-  'prefix' => 'api',
+    'prefix' => 'api',
+    'middleware' => 'auth',
 ], function () {
     Route::get('me', function() {
         return auth()->user();
+    });
+
+    Route::post('user-term/{term}/toggle', function (App\UserTerms $term) {
+        if (auth()->user()->id != $term->user_id) {
+            abort(403);
+        }
+
+        $term->toggleChecked();
+
+        return $term;
     });
 });
