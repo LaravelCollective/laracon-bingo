@@ -1,23 +1,15 @@
 <template>
-    <div class="container-fluid" id="bingo">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>B</th>
-                    <th>I</th>
-                    <th>N</th>
-                    <th>G</th>
-                    <th>O</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="i in [0,1,2,3,4]">
-                    <td v-for="term in row(i)">
-                        <term :term="term"></term>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+    <div class="container" id="bingo">
+        <div class="row text-xs-center">
+            <div class="col-xs">B</div>
+            <div class="col-xs">I</div>
+            <div class="col-xs">N</div>
+            <div class="col-xs">G</div>
+            <div class="col-xs">O</div>
+        </div>
+        <div class="row text-xs-center term-row" v-for="i in [0,1,2,3,4]">
+            <term v-for="term in row(i)" :term="term"></term>
+        </div>
     </div>
 </template>
 
@@ -73,7 +65,7 @@ export default {
     #bingo {
         margin-top: 65px;
     }
-    th {
-        text-align: center;
+    .term-row {
+        margin-bottom: 15px;
     }
 </style>

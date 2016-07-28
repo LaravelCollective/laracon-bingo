@@ -1,6 +1,8 @@
 <template>
-    <div @click="toggleChecked()" class="term" :class="term.checked ? 'checked' : ''">
-        {{ term.name }}
+    <div class="col-xs">
+        <div class="term" :class="term.checked ? 'checked' : ''" @click="toggleChecked">
+            {{ term.name }}
+        </div>
     </div>
 </template>
 

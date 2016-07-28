@@ -14700,7 +14700,7 @@ $vm.app(_App2.default).start('#app');
 
 },{"./App.vue":7,"./SPA":8}],10:[function(require,module,exports){
 var __vueify_insert__ = require("vueify/lib/insert-css")
-var __vueify_style__ = __vueify_insert__.insert("\n#bingo {\n    margin-top: 65px;\n}\nth {\n    text-align: center;\n}\n")
+var __vueify_style__ = __vueify_insert__.insert("\n#bingo {\n    margin-top: 65px;\n}\n.term-row {\n    margin-bottom: 15px;\n}\n")
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -14759,13 +14759,13 @@ exports.default = {
     components: { Term: _Term2.default }
 };
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"container-fluid\" id=\"bingo\">\n    <table class=\"table\">\n        <thead>\n            <tr>\n                <th>B</th>\n                <th>I</th>\n                <th>N</th>\n                <th>G</th>\n                <th>O</th>\n            </tr>\n        </thead>\n        <tbody>\n            <tr v-for=\"i in [0,1,2,3,4]\">\n                <td v-for=\"term in row(i)\">\n                    <term :term=\"term\"></term>\n                </td>\n            </tr>\n        </tbody>\n    </table>\n</div>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"container\" id=\"bingo\">\n    <div class=\"row text-xs-center\">\n        <div class=\"col-xs\">B</div>\n        <div class=\"col-xs\">I</div>\n        <div class=\"col-xs\">N</div>\n        <div class=\"col-xs\">G</div>\n        <div class=\"col-xs\">O</div>\n    </div>\n    <div class=\"row text-xs-center term-row\" v-for=\"i in [0,1,2,3,4]\">\n        <term v-for=\"term in row(i)\" :term=\"term\"></term>\n    </div>\n</div>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
   if (!hotAPI.compatible) return
   module.hot.dispose(function () {
-    __vueify_insert__.cache["\n#bingo {\n    margin-top: 65px;\n}\nth {\n    text-align: center;\n}\n"] = false
+    __vueify_insert__.cache["\n#bingo {\n    margin-top: 65px;\n}\n.term-row {\n    margin-bottom: 15px;\n}\n"] = false
     document.head.removeChild(__vueify_style__)
   })
   if (!module.hot.data) {
@@ -14826,7 +14826,7 @@ exports.default = {
     }
 };
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div @click=\"toggleChecked()\" class=\"term\" :class=\"term.checked ? 'checked' : ''\">\n    {{ term.name }}\n</div>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"col-xs\">\n    <div class=\"term\" :class=\"term.checked ? 'checked' : ''\" @click=\"toggleChecked\">\n        {{ term.name }}\n    </div>\n</div>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
