@@ -14786,7 +14786,7 @@ exports.default = {
     //
 };
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<nav class=\"navbar navbar-light bg-faded navbar-fixed-top\">\n    <a class=\"navbar-brand\" href=\"https://laravelcollective.com\" target=\"_blank\">\n        <img src=\"/img/full-logo.png\" alt=\"Laravel Collective\" class=\"img-responsive\">\n    </a>\n    <ul class=\"nav navbar-nav\">\n        <li class=\"nav-item\">\n            <a class=\"nav-link\" href=\"#\">Home</a>\n        </li>\n    </ul>\n    <ul class=\"nav navbar-nav pull-xs-right\">\n        <li class=\"nav-item\">\n            <a href=\"/auth/logout\" class=\"nav-link\">Logout</a>\n        </li>\n    </ul>\n</nav>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<nav class=\"navbar navbar-light bg-faded navbar-fixed-top\">\n    <a class=\"navbar-brand\" href=\"https://laravelcollective.com\" target=\"_blank\">\n        <img src=\"/img/full-logo.png\" alt=\"Laravel Collective\" class=\"img-responsive\">\n    </a>\n    <ul class=\"nav navbar-nav pull-xs-right\">\n        <li class=\"nav-item\">\n            <a href=\"/auth/logout\" class=\"nav-link\">Logout</a>\n        </li>\n    </ul>\n</nav>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
