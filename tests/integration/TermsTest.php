@@ -37,7 +37,7 @@ class TermsTest extends TestCase
         $user1 = factory(\App\User::class)->make();
         $user2 = factory(\App\User::class)->make();
 
-        $this->assertTrue($user1->terms == $user2->terms);
+        $this->assertFalse($user1->terms == $user2->terms);
 
     }
 
