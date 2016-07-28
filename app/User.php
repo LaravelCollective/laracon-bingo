@@ -43,6 +43,10 @@ class User extends Authenticatable
       'terms',
     ];
 
+    protected $with = [
+        'terms.term'
+    ];
+
     /**
      * @param SocialiteUser $socialiteUser
      * @param string        $provider
@@ -70,15 +74,33 @@ class User extends Authenticatable
         return $user;
     }
 
-    /**
-     * @return Collection
-     */
     public function getTermsAttribute()
     {
-        $faker = Factory::create();
-        $seed = preg_replace('/[^0-9]/', '', md5($this->email));
-        $faker->seed($seed);
+        return $this->getRelationValue('terms')->count() == 24 ? $this->getRelationValue('terms') : $this->assignTerms();
+    }
 
-        return Collection::make($faker->randomElements(Term::all()->all(), 24));
+    public function terms()
+    {
+        return $this->hasMany(UserTerms::class);
+
+        if ($terms->count() == 0) {
+            return $this->assignTerms();
+        }
+
+        return $terms;
+    }
+
+    public function assignTerms()
+    {
+        $terms = Term::all()->random(24)->shuffle();
+
+        $terms->each(function ($term) {
+            UserTerms::create([
+                'term_id' => $term->id,
+                'user_id' => $this->id,
+            ]);
+        });
+
+        return $this->load('terms')->getRelationValue('terms');
     }
 }
