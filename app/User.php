@@ -61,7 +61,7 @@ class User extends Authenticatable
             $user->{$provider . '_id'} = $socialiteUser->getId();
         }
 
-        $user->name = $socialiteUser->getName();
+        $user->name = $socialiteUser->getName() ?: '';
         $user->email = $socialiteUser->getEmail();
         $user->avatar = $socialiteUser->getAvatar();
 
