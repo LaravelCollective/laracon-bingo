@@ -98,7 +98,7 @@ class User extends Authenticatable
      */
     public function terms()
     {
-        $terms = $this->hasMany(UserTerms::class);
+        return/t $this->hasMany(UserTerms::class);
 
         if ($terms->count() == 0) {
             return $this->assignTerms();
