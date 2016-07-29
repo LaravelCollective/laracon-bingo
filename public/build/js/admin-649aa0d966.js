@@ -18755,7 +18755,7 @@ exports.default = {
     components: { NavBar: _NavBar2.default }
 };
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div>\n    <nav-bar>\n        <ul class=\"nav navbar-nav\">\n            <li class=\"nav-item\">\n              <a class=\"nav-link\" v-link=\"{path: '/'}\">Terms</a>\n            </li>\n            <li class=\"nav-item\">\n              <a class=\"nav-link\" v-link=\"{path: '/users'}\">Users</a>\n            </li>\n          </ul>\n    </nav-bar>\n    <div class=\"container-fluid\" id=\"body\">\n        <router-view></router-view>\n    </div>\n</div>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div>\n    <nav-bar>\n        <ul class=\"nav navbar-nav\">\n            <li class=\"nav-item\">\n                <a href=\"/\" class=\"nav-link\">Back to Bingo <i class=\"fa fa-external-link\"></i></a>\n            </li>\n            <li class=\"nav-item\">\n                <a class=\"nav-link\" v-link=\"{path: '/'}\">Terms</a>\n            </li>\n            <li class=\"nav-item\">\n                <a class=\"nav-link\" v-link=\"{path: '/users'}\">Users</a>\n            </li>\n        </ul>\n    </nav-bar>\n    <div class=\"container-fluid\" id=\"body\">\n        <router-view></router-view>\n    </div>\n</div>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
