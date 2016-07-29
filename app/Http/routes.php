@@ -16,7 +16,7 @@ Route::get('/', function () {
 })->middleware('auth');
 
 Route::get('admin', function () {
-    return 'admin';
+    return view('admin');
 })->middleware(['auth', 'can:admin']);
 
 Route::get('login', function () {
@@ -50,4 +50,9 @@ Route::group([
 
         return $term;
     });
+
+    Route::get('terms', 'TermsController@index')
+        ->middleware('can:admin');
+    Route::post('terms/{term}/verify', 'TermsController@verify')
+        ->middleware('can:admin');
 });

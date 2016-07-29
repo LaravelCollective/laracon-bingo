@@ -10,4 +10,12 @@ class TermsController extends Controller
         return Term::all();
     }
 
+    public function verify(Term $term)
+    {
+        $term->update([
+          'verified' => ! $term->verified,
+        ]);
+
+        return $term;
+    }
 }

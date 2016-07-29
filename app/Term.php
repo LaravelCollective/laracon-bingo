@@ -10,6 +10,7 @@ class Term extends Eloquent
      */
     protected $fillable = [
       'term',
+      'verified',
     ];
 
 }
