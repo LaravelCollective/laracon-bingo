@@ -21,10 +21,6 @@ class UserTerms extends Model
         'name',
     ];
 
-    protected $hidden = [
-        'term'
-    ];
-
     public function user()
     {
         return $this->belongsTo(User::class);

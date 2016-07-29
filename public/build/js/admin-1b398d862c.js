@@ -18755,7 +18755,7 @@ exports.default = {
     components: { NavBar: _NavBar2.default }
 };
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div>\n    <nav-bar></nav-bar>\n    <div class=\"container-fluid\" id=\"body\">\n        <router-view></router-view>\n    </div>\n</div>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div>\n    <nav-bar>\n        <ul class=\"nav navbar-nav\">\n            <li class=\"nav-item\">\n              <a class=\"nav-link\" v-link=\"{path: '/'}\">Terms</a>\n            </li>\n            <li class=\"nav-item\">\n              <a class=\"nav-link\" v-link=\"{path: '/users'}\">Users</a>\n            </li>\n          </ul>\n    </nav-bar>\n    <div class=\"container-fluid\" id=\"body\">\n        <router-view></router-view>\n    </div>\n</div>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
@@ -19009,7 +19009,7 @@ exports.default = {
     components: { Bingo: _Bingo2.default }
 };
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div>\n    <a v-link=\"{path: '/users'}\" class=\"btn btn-primary pull-right\">\n        <i class=\"fa fa-chevron-left\"></i>\n    </a>\n    <h3 v-if=\"user\" class=\"text-center\">{{ user.name }} - {{ user.email }}</h3>\n    <bingo v-if=\"user\" :user=\"user\"></bingo>\n</div>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div>\n    <a v-link=\"{path: '/users'}\" class=\"btn btn-primary pull-right\">\n        <i class=\"fa fa-chevron-left\"></i>\n    </a>\n    <h3 v-if=\"user\" class=\"text-center\">\n        {{ user.name }} - {{ user.email }}\n        <i class=\"fa fa-github\" v-show=\"user.github_id\"></i>\n        <i class=\"fa fa-facebook\" v-show=\"user.facebook_id\"></i>\n    </h3>\n    <bingo v-if=\"user\" :user=\"user\" :admin=\"true\"></bingo>\n</div>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
@@ -19076,7 +19076,7 @@ if (module.hot) {(function () {  module.hot.accept()
 })()}
 },{"moment":1,"vue":6,"vue-hot-reload-api":3}],14:[function(require,module,exports){
 var __vueify_insert__ = require("vueify/lib/insert-css")
-var __vueify_style__ = __vueify_insert__.insert("\n#bingo {\n    margin-top: 65px;\n}\n.term-row {\n    margin-bottom: 15px;\n}\n")
+var __vueify_style__ = __vueify_insert__.insert("\n#bingo {\n    margin-top: 65px;\n}\n#bingoButton {\n    background-color: #f4645f;\n    border-color: #d84b46;\n}\n.term-row {\n    margin-bottom: 15px;\n}\n")
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -19090,7 +19090,7 @@ var _Term2 = _interopRequireDefault(_Term);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = {
-    props: ['user'],
+    props: ['user', 'admin'],
     data: function data() {
         return {
             loading: false
@@ -19130,18 +19130,27 @@ exports.default = {
             }
 
             return terms;
+        },
+        bingo: function bingo() {
+            var _this2 = this;
+
+            this.loading = true;
+            this.$http.post('/api/me/bingo').then(function (response) {
+                _this2.loading = false;
+                _this2.user = response.json();
+            });
         }
     },
     components: { Term: _Term2.default }
 };
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"container\" id=\"bingo\">\n    <div class=\"row text-xs-center\">\n        <div class=\"col-xs\">B</div>\n        <div class=\"col-xs\">I</div>\n        <div class=\"col-xs\">N</div>\n        <div class=\"col-xs\">G</div>\n        <div class=\"col-xs\">O</div>\n    </div>\n    <div class=\"row text-xs-center term-row\" v-for=\"i in [0,1,2,3,4]\">\n        <term v-for=\"term in row(i)\" :term=\"term\"></term>\n    </div>\n</div>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"container\" id=\"bingo\">\n    <div class=\"row text-xs-center\">\n        <div class=\"col-xs\">B</div>\n        <div class=\"col-xs\">I</div>\n        <div class=\"col-xs\">N</div>\n        <div class=\"col-xs\">G</div>\n        <div class=\"col-xs\">O</div>\n    </div>\n    <div class=\"row text-xs-center term-row\" v-for=\"i in [0,1,2,3,4]\">\n        <term v-for=\"term in row(i)\" :term=\"term\" :readonly=\"user.submitted_at\" :admin=\"admin\"></term>\n    </div>\n    <br>\n    <button class=\"btn btn-block btn-lg btn-primary\" id=\"bingoButton\" v-show=\"!user.submitted_at\" @click=\"bingo\">BINGO!</button>\n    <div class=\"alert alert-info\" v-show=\"user.submitted_at\">\n        Thanks for playing Laracon Bingo! We'll be in touch if you're a winner! Tweet <a href=\"https://twitter.com/artisangoose\" target=\"_blank\">@artisangoose</a> if you've submitted by mistake.\n    </div>\n</div>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
   if (!hotAPI.compatible) return
   module.hot.dispose(function () {
-    __vueify_insert__.cache["\n#bingo {\n    margin-top: 65px;\n}\n.term-row {\n    margin-bottom: 15px;\n}\n"] = false
+    __vueify_insert__.cache["\n#bingo {\n    margin-top: 65px;\n}\n#bingoButton {\n    background-color: #f4645f;\n    border-color: #d84b46;\n}\n.term-row {\n    margin-bottom: 15px;\n}\n"] = false
     document.head.removeChild(__vueify_style__)
   })
   if (!module.hot.data) {
@@ -19162,7 +19171,7 @@ exports.default = {
     //
 };
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<nav class=\"navbar navbar-light bg-faded navbar-fixed-top\">\n    <a class=\"navbar-brand\" href=\"https://laravelcollective.com\" target=\"_blank\">\n        <img src=\"/img/full-logo.png\" alt=\"Laravel Collective\" class=\"img-responsive\">\n    </a>\n    <ul class=\"nav navbar-nav pull-xs-right\">\n        <li class=\"nav-item\">\n            <a href=\"/auth/logout\" class=\"nav-link\">Logout</a>\n        </li>\n    </ul>\n</nav>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<nav class=\"navbar navbar-light bg-faded navbar-fixed-top\">\n    <a class=\"navbar-brand\" href=\"https://laravelcollective.com\" target=\"_blank\">\n        <img src=\"/img/full-logo.png\" alt=\"Laravel Collective\" class=\"img-responsive\">\n    </a>\n    <slot></slot>\n    <ul class=\"nav navbar-nav pull-xs-right\">\n        <li class=\"nav-item\">\n            <a href=\"/auth/logout\" class=\"nav-link\">Logout</a>\n        </li>\n    </ul>\n</nav>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
@@ -19179,14 +19188,14 @@ if (module.hot) {(function () {  module.hot.accept()
 })()}
 },{"vue":6,"vue-hot-reload-api":3,"vueify/lib/insert-css":7}],16:[function(require,module,exports){
 var __vueify_insert__ = require("vueify/lib/insert-css")
-var __vueify_style__ = __vueify_insert__.insert("\n.term {\n    background-color: #ccc;\n    color: #fff;\n    height: 15vh;\n    line-height: 15vh;\n    border-radius: 3px;\n    text-transform: uppercase;\n    cursor: pointer;\n}\n.term.checked {\n    background-color: #f4645f;\n}\n.term.locked {\n    background-image: url('/img/taylor_mug.png');\n    background-position: center center;\n    background-size: cover;\n}\n")
+var __vueify_style__ = __vueify_insert__.insert("\n.term {\n    background-color: #ccc;\n    color: #fff;\n    height: 13vh;\n    line-height: 13vh;\n    border-radius: 3px;\n    text-transform: uppercase;\n}\n.term.clickable {\n    cursor: pointer;\n}\n.term.checked {\n    background-color: #f4645f;\n}\n.term.locked {\n    background-image: url('/img/taylor_mug.png');\n    background-position: center center;\n    background-size: cover;\n}\n")
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
 exports.default = {
-    props: ['term'],
+    props: ['term', 'readonly', 'admin'],
     computed: {
         termClasses: function termClasses() {
             var classes = '';
@@ -19199,6 +19208,10 @@ exports.default = {
                 classes = classes + ' locked';
             }
 
+            if (!this.readonly) {
+                classes = classes + ' clickable';
+            }
+
             return classes;
         }
     },
@@ -19206,7 +19219,7 @@ exports.default = {
         toggleChecked: function toggleChecked() {
             var _this = this;
 
-            if (this.term.locked) {
+            if (this.term.locked || this.readonly) {
                 return;
             }
 
@@ -19217,13 +19230,13 @@ exports.default = {
     }
 };
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"col-xs\">\n    <div class=\"term\" :class=\"termClasses\" @click=\"toggleChecked\">\n        {{ term.name }}\n    </div>\n</div>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"col-xs\">\n    <div class=\"term\" :class=\"termClasses\" @click=\"toggleChecked\">\n        <i class=\"fa fa-check\" v-show=\"admin &amp;&amp; term.term.verified\"></i>\n        {{ term.name }}\n    </div>\n</div>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
   if (!hotAPI.compatible) return
   module.hot.dispose(function () {
-    __vueify_insert__.cache["\n.term {\n    background-color: #ccc;\n    color: #fff;\n    height: 15vh;\n    line-height: 15vh;\n    border-radius: 3px;\n    text-transform: uppercase;\n    cursor: pointer;\n}\n.term.checked {\n    background-color: #f4645f;\n}\n.term.locked {\n    background-image: url('/img/taylor_mug.png');\n    background-position: center center;\n    background-size: cover;\n}\n"] = false
+    __vueify_insert__.cache["\n.term {\n    background-color: #ccc;\n    color: #fff;\n    height: 13vh;\n    line-height: 13vh;\n    border-radius: 3px;\n    text-transform: uppercase;\n}\n.term.clickable {\n    cursor: pointer;\n}\n.term.checked {\n    background-color: #f4645f;\n}\n.term.locked {\n    background-image: url('/img/taylor_mug.png');\n    background-position: center center;\n    background-size: cover;\n}\n"] = false
     document.head.removeChild(__vueify_style__)
   })
   if (!module.hot.data) {

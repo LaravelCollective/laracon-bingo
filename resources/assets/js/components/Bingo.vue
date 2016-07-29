@@ -8,7 +8,7 @@
             <div class="col-xs">O</div>
         </div>
         <div class="row text-xs-center term-row" v-for="i in [0,1,2,3,4]">
-            <term v-for="term in row(i)" :term="term" :readonly="user.submitted_at"></term>
+            <term v-for="term in row(i)" :term="term" :readonly="user.submitted_at" :admin="admin"></term>
         </div>
         <br>
         <button class="btn btn-block btn-lg btn-primary" id="bingoButton" v-show="!user.submitted_at" @click="bingo">BINGO!</button>
@@ -22,7 +22,7 @@
 import Term from './Term.vue'
 
 export default {
-    props: ['user'],
+    props: ['user', 'admin'],
     data() {
         return {
             loading: false

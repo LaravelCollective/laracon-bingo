@@ -3,6 +3,7 @@
         <a class="navbar-brand" href="https://laravelcollective.com" target="_blank">
             <img src="/img/full-logo.png" alt="Laravel Collective" class="img-responsive">
         </a>
+        <slot></slot>
         <ul class="nav navbar-nav pull-xs-right">
             <li class="nav-item">
                 <a href="/auth/logout" class="nav-link">Logout</a>

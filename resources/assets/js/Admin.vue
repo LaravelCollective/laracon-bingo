@@ -1,6 +1,15 @@
 <template>
     <div>
-        <nav-bar></nav-bar>
+        <nav-bar>
+            <ul class="nav navbar-nav">
+                <li class="nav-item">
+                  <a class="nav-link" v-link="{path: '/'}">Terms</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" v-link="{path: '/users'}">Users</a>
+                </li>
+              </ul>
+        </nav-bar>
         <div class="container-fluid" id="body">
             <router-view></router-view>
         </div>

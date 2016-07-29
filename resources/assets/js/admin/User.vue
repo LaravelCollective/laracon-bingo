@@ -3,8 +3,12 @@
         <a v-link="{path: '/users'}" class="btn btn-primary pull-right">
             <i class="fa fa-chevron-left"></i>
         </a>
-        <h3 v-if="user" class="text-center">{{ user.name }} - {{ user.email }}</h3>
-        <bingo v-if="user" :user="user"></bingo>
+        <h3 v-if="user" class="text-center">
+            {{ user.name }} - {{ user.email }}
+            <i class="fa fa-github" v-show="user.github_id"></i>
+            <i class="fa fa-facebook" v-show="user.facebook_id"></i>
+        </h3>
+        <bingo v-if="user" :user="user" :admin="true"></bingo>
     </div>
 </template>
 

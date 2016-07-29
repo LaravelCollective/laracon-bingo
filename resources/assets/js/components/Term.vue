@@ -1,6 +1,7 @@
 <template>
     <div class="col-xs">
         <div class="term" :class="termClasses" @click="toggleChecked">
+            <i class="fa fa-check" v-show="admin && term.term.verified"></i>
             {{ term.name }}
         </div>
     </div>
@@ -9,7 +10,7 @@
 <script>
 
 export default {
-    props: ['term', 'readonly'],
+    props: ['term', 'readonly', 'admin'],
     computed: {
         termClasses() {
             let classes = ''

@@ -14720,7 +14720,7 @@ var _Term2 = _interopRequireDefault(_Term);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = {
-    props: ['user'],
+    props: ['user', 'admin'],
     data: function data() {
         return {
             loading: false
@@ -14774,7 +14774,7 @@ exports.default = {
     components: { Term: _Term2.default }
 };
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"container\" id=\"bingo\">\n    <div class=\"row text-xs-center\">\n        <div class=\"col-xs\">B</div>\n        <div class=\"col-xs\">I</div>\n        <div class=\"col-xs\">N</div>\n        <div class=\"col-xs\">G</div>\n        <div class=\"col-xs\">O</div>\n    </div>\n    <div class=\"row text-xs-center term-row\" v-for=\"i in [0,1,2,3,4]\">\n        <term v-for=\"term in row(i)\" :term=\"term\" :readonly=\"user.submitted_at\"></term>\n    </div>\n    <br>\n    <button class=\"btn btn-block btn-lg btn-primary\" id=\"bingoButton\" v-show=\"!user.submitted_at\" @click=\"bingo\">BINGO!</button>\n    <div class=\"alert alert-info\" v-show=\"user.submitted_at\">\n        Thanks for playing Laracon Bingo! We'll be in touch if you're a winner! Tweet <a href=\"https://twitter.com/artisangoose\" target=\"_blank\">@artisangoose</a> if you've submitted by mistake.\n    </div>\n</div>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"container\" id=\"bingo\">\n    <div class=\"row text-xs-center\">\n        <div class=\"col-xs\">B</div>\n        <div class=\"col-xs\">I</div>\n        <div class=\"col-xs\">N</div>\n        <div class=\"col-xs\">G</div>\n        <div class=\"col-xs\">O</div>\n    </div>\n    <div class=\"row text-xs-center term-row\" v-for=\"i in [0,1,2,3,4]\">\n        <term v-for=\"term in row(i)\" :term=\"term\" :readonly=\"user.submitted_at\" :admin=\"admin\"></term>\n    </div>\n    <br>\n    <button class=\"btn btn-block btn-lg btn-primary\" id=\"bingoButton\" v-show=\"!user.submitted_at\" @click=\"bingo\">BINGO!</button>\n    <div class=\"alert alert-info\" v-show=\"user.submitted_at\">\n        Thanks for playing Laracon Bingo! We'll be in touch if you're a winner! Tweet <a href=\"https://twitter.com/artisangoose\" target=\"_blank\">@artisangoose</a> if you've submitted by mistake.\n    </div>\n</div>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
@@ -14801,7 +14801,7 @@ exports.default = {
     //
 };
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<nav class=\"navbar navbar-light bg-faded navbar-fixed-top\">\n    <a class=\"navbar-brand\" href=\"https://laravelcollective.com\" target=\"_blank\">\n        <img src=\"/img/full-logo.png\" alt=\"Laravel Collective\" class=\"img-responsive\">\n    </a>\n    <ul class=\"nav navbar-nav pull-xs-right\">\n        <li class=\"nav-item\">\n            <a href=\"/auth/logout\" class=\"nav-link\">Logout</a>\n        </li>\n    </ul>\n</nav>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<nav class=\"navbar navbar-light bg-faded navbar-fixed-top\">\n    <a class=\"navbar-brand\" href=\"https://laravelcollective.com\" target=\"_blank\">\n        <img src=\"/img/full-logo.png\" alt=\"Laravel Collective\" class=\"img-responsive\">\n    </a>\n    <slot></slot>\n    <ul class=\"nav navbar-nav pull-xs-right\">\n        <li class=\"nav-item\">\n            <a href=\"/auth/logout\" class=\"nav-link\">Logout</a>\n        </li>\n    </ul>\n</nav>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
@@ -14825,7 +14825,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 exports.default = {
-    props: ['term', 'readonly'],
+    props: ['term', 'readonly', 'admin'],
     computed: {
         termClasses: function termClasses() {
             var classes = '';
@@ -14860,7 +14860,7 @@ exports.default = {
     }
 };
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"col-xs\">\n    <div class=\"term\" :class=\"termClasses\" @click=\"toggleChecked\">\n        {{ term.name }}\n    </div>\n</div>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"col-xs\">\n    <div class=\"term\" :class=\"termClasses\" @click=\"toggleChecked\">\n        <i class=\"fa fa-check\" v-show=\"admin &amp;&amp; term.term.verified\"></i>\n        {{ term.name }}\n    </div>\n</div>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)

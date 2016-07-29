@@ -33,8 +33,8 @@ class User extends Authenticatable
     protected $hidden = [
       'password',
       'remember_token',
-      'github_id',
-      'facebook_id',
+      //'github_id',
+      //'facebook_id',
     ];
 
     /**
@@ -98,7 +98,7 @@ class User extends Authenticatable
      */
     public function terms()
     {
-        return $this->hasMany(UserTerms::class);
+        $terms = $this->hasMany(UserTerms::class);
 
         if ($terms->count() == 0) {
             return $this->assignTerms();
