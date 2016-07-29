@@ -7,7 +7,7 @@
             <div class="col-xs" v-for="i in [0,1,2,3,4]">
                 <div class="list-group">
                     <button
-                        v-for="term in row(i)"
+                        v-for="term in row(i) | orderBy 'term'"
                         :class="{'list-group-item-success': term.verified}"
                         @click="verify(term)"
                         class="list-group-item list-group-item-action"
