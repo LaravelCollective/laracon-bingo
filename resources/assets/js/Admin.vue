@@ -51,6 +51,7 @@ export default {
             return this.terms.slice(start, end)
         },
         verify(term) {
+            this.loading = true
             this.$http.post('/api/terms/' + term.id + '/verify')
                 .then(response => {
                     this.reload()

@@ -14582,6 +14582,7 @@ exports.default = {
         verify: function verify(term) {
             var _this2 = this;
 
+            this.loading = true;
             this.$http.post('/api/terms/' + term.id + '/verify').then(function (response) {
                 _this2.reload();
             });
