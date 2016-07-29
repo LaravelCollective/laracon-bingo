@@ -42,6 +42,7 @@ Route::group([
 ], function () {
     Route::get('me', function () {
         $me = auth()->user();
+        $me->terms;
 
         $me->load('terms.term');
 
