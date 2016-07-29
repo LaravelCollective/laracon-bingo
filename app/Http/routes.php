@@ -15,10 +15,12 @@ use App\UserTerms;
 use Carbon\Carbon;
 
 Route::get('/', function () {
+    auth()->user()->getTermsAttribute();
     return view('index');
 })->middleware('auth');
 
 Route::get('admin', function () {
+    auth()->user()->getTermsAttribute();
     return view('admin');
 })->middleware(['auth', 'can:admin']);
 
@@ -42,7 +44,6 @@ Route::group([
 ], function () {
     Route::get('me', function () {
         $me = auth()->user();
-        $me->terms;
 
         $me->load('terms.term');
 
