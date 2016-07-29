@@ -22,6 +22,7 @@ class User extends Authenticatable
       'password',
       'github_id',
       'facebook_id',
+      'submitted_at',
     ];
 
     /**
@@ -43,8 +44,18 @@ class User extends Authenticatable
       'terms',
     ];
 
+    /**
+     * @var array
+     */
     protected $with = [
-        'terms.term'
+      'terms.term',
+    ];
+
+    /**
+     * @var array
+     */
+    protected $dates = [
+      'submitted_at',
     ];
 
     /**
@@ -74,11 +85,17 @@ class User extends Authenticatable
         return $user;
     }
 
+    /**
+     * @return mixed
+     */
     public function getTermsAttribute()
     {
         return $this->getRelationValue('terms')->count() == 24 ? $this->getRelationValue('terms') : $this->assignTerms();
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany|mixed
+     */
     public function terms()
     {
         return $this->hasMany(UserTerms::class);
@@ -90,14 +107,17 @@ class User extends Authenticatable
         return $terms;
     }
 
+    /**
+     * @return mixed
+     */
     public function assignTerms()
     {
         $terms = Term::all()->random(24)->shuffle();
 
         $terms->each(function ($term) {
             UserTerms::create([
-                'term_id' => $term->id,
-                'user_id' => $this->id,
+              'term_id' => $term->id,
+              'user_id' => $this->id,
             ]);
         });
 

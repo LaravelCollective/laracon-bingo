@@ -8,7 +8,12 @@
             <div class="col-xs">O</div>
         </div>
         <div class="row text-xs-center term-row" v-for="i in [0,1,2,3,4]">
-            <term v-for="term in row(i)" :term="term"></term>
+            <term v-for="term in row(i)" :term="term" :readonly="user.submitted_at"></term>
+        </div>
+        <br>
+        <button class="btn btn-block btn-lg btn-primary" id="bingoButton" v-show="!user.submitted_at" @click="bingo">BINGO!</button>
+        <div class="alert alert-info" v-show="user.submitted_at">
+            Thanks for playing Laracon Bingo! We'll be in touch if you're a winner! Tweet <a href="https://twitter.com/artisangoose" target="_blank">@artisangoose</a> if you've submitted by mistake.
         </div>
     </div>
 </template>
@@ -17,10 +22,10 @@
 import Term from './Term.vue'
 
 export default {
+    props: ['user'],
     data() {
         return {
-            loading: false,
-            user: window.User
+            loading: false
         }
     },
     computed: {
@@ -55,6 +60,14 @@ export default {
             }
 
             return terms
+        },
+        bingo() {
+            this.loading = true
+            this.$http.post('/api/me/bingo')
+                .then(response => {
+                    this.loading = false
+                    this.user = response.json()
+                })
         }
     },
     components: {Term}
@@ -64,6 +77,10 @@ export default {
 <style>
     #bingo {
         margin-top: 65px;
+    }
+    #bingoButton {
+        background-color: #f4645f;
+        border-color: #d84b46;
     }
     .term-row {
         margin-bottom: 15px;

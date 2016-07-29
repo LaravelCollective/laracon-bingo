@@ -9,7 +9,7 @@
 <script>
 
 export default {
-    props: ['term'],
+    props: ['term', 'readonly'],
     computed: {
         termClasses() {
             let classes = ''
@@ -22,12 +22,16 @@ export default {
                 classes = classes + ' locked'
             }
 
+            if(!this.readonly) {
+                classes = classes + ' clickable'
+            }
+
             return classes
         }
     },
     methods: {
         toggleChecked() {
-            if (this.term.locked) {
+            if (this.term.locked || this.readonly) {
                 return;
             }
 
@@ -44,10 +48,12 @@ export default {
 .term {
     background-color: #ccc;
     color: #fff;
-    height: 15vh;
-    line-height: 15vh;
+    height: 13vh;
+    line-height: 13vh;
     border-radius: 3px;
     text-transform: uppercase;
+}
+.term.clickable {
     cursor: pointer;
 }
 .term.checked {

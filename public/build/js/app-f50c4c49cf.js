@@ -14541,8 +14541,6 @@ exports.insert = function (css) {
 }
 
 },{}],7:[function(require,module,exports){
-var __vueify_insert__ = require("vueify/lib/insert-css")
-var __vueify_style__ = __vueify_insert__.insert("\n#body {\n    margin-top: 65px;\n}\n")
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -14553,64 +14551,34 @@ var _NavBar = require('./components/NavBar.vue');
 
 var _NavBar2 = _interopRequireDefault(_NavBar);
 
+var _Bingo = require('./components/Bingo.vue');
+
+var _Bingo2 = _interopRequireDefault(_Bingo);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = {
     data: function data() {
         return {
-            loading: false,
-            terms: []
+            user: window.User
         };
     },
 
-    methods: {
-        reload: function reload() {
-            var _this = this;
-
-            this.loading = true;
-            this.$http.get('/api/terms').then(function (response) {
-                _this.loading = false;
-                _this.terms = response.json();
-            });
-        },
-        row: function row(num) {
-            var start = num * 20;
-            var end = start + 20;
-
-            return this.terms.slice(start, end);
-        },
-        verify: function verify(term) {
-            var _this2 = this;
-
-            this.loading = true;
-            this.$http.post('/api/terms/' + term.id + '/verify').then(function (response) {
-                _this2.reload();
-            });
-        }
-    },
-    ready: function ready() {
-        this.reload();
-    },
-
-    components: { NavBar: _NavBar2.default }
+    components: { NavBar: _NavBar2.default, Bingo: _Bingo2.default }
 };
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div>\n    <nav-bar></nav-bar>\n    <div class=\"container-fluid\" id=\"body\">\n        <button class=\"btn btn-primary pull-right\" @click=\"reload\" :disabled=\"loading\">\n            <i class=\"fa fa-refresh\" :class=\"{'fa-spin': loading}\"></i>\n        </button>\n        <div class=\"row\">\n            <div class=\"col-xs\" v-for=\"i in [0,1,2,3,4]\">\n                <div class=\"list-group\">\n                    <button v-for=\"term in row(i)\" :class=\"{'list-group-item-success': term.verified}\" @click=\"verify(term)\" class=\"list-group-item list-group-item-action\" type=\"button\">\n                        {{ term.id }}\n                        <span class=\"pull-right\">{{ term.term }}</span>\n                    </button>\n                </div>\n            </div>\n        </div>\n    </div>\n</div>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div>\n    <nav-bar></nav-bar>\n    <bingo :user.sync=\"user\"></bingo>\n</div>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
   if (!hotAPI.compatible) return
-  module.hot.dispose(function () {
-    __vueify_insert__.cache["\n#body {\n    margin-top: 65px;\n}\n"] = false
-    document.head.removeChild(__vueify_style__)
-  })
   if (!module.hot.data) {
-    hotAPI.createRecord("_v-a944e21e", module.exports)
+    hotAPI.createRecord("_v-645de743", module.exports)
   } else {
-    hotAPI.update("_v-a944e21e", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
+    hotAPI.update("_v-645de743", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"./components/NavBar.vue":10,"vue":5,"vue-hot-reload-api":2,"vueify/lib/insert-css":6}],8:[function(require,module,exports){
+},{"./components/Bingo.vue":10,"./components/NavBar.vue":11,"vue":5,"vue-hot-reload-api":2}],8:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -14726,17 +14694,102 @@ var _SPA = require('./SPA');
 
 var _SPA2 = _interopRequireDefault(_SPA);
 
-var _Admin = require('./Admin.vue');
+var _App = require('./App.vue');
 
-var _Admin2 = _interopRequireDefault(_Admin);
+var _App2 = _interopRequireDefault(_App);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var $vm = new _SPA2.default();
 
-$vm.app(_Admin2.default).start('#admin');
+$vm.app(_App2.default).start('#app');
 
-},{"./Admin.vue":7,"./SPA":8}],10:[function(require,module,exports){
+},{"./App.vue":7,"./SPA":8}],10:[function(require,module,exports){
+var __vueify_insert__ = require("vueify/lib/insert-css")
+var __vueify_style__ = __vueify_insert__.insert("\n#bingo {\n    margin-top: 65px;\n}\n#bingoButton {\n    background-color: #f4645f;\n    border-color: #d84b46;\n}\n.term-row {\n    margin-bottom: 15px;\n}\n")
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _Term = require('./Term.vue');
+
+var _Term2 = _interopRequireDefault(_Term);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = {
+    props: ['user'],
+    data: function data() {
+        return {
+            loading: false
+        };
+    },
+
+    computed: {
+        terms: function terms() {
+            return this.user.terms;
+        }
+    },
+    methods: {
+        reload: function reload() {
+            var _this = this;
+
+            this.loading = true;
+            this.$http.get('/api/me').then(function (response) {
+                _this.loading = false;
+                _this.user = response.json();
+            });
+        },
+        row: function row(num) {
+            var start = num * 5;
+            var end = start + 5;
+
+            if (num >= 2) end--;
+            if (num >= 3) start--;
+
+            var terms = this.terms.slice(start, end);
+
+            if (num == 2) {
+                terms.splice(2, 0, {
+                    name: '',
+                    checked: true,
+                    locked: true
+                });
+            }
+
+            return terms;
+        },
+        bingo: function bingo() {
+            var _this2 = this;
+
+            this.loading = true;
+            this.$http.post('/api/me/bingo').then(function (response) {
+                _this2.loading = false;
+                _this2.user = response.json();
+            });
+        }
+    },
+    components: { Term: _Term2.default }
+};
+if (module.exports.__esModule) module.exports = module.exports.default
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"container\" id=\"bingo\">\n    <div class=\"row text-xs-center\">\n        <div class=\"col-xs\">B</div>\n        <div class=\"col-xs\">I</div>\n        <div class=\"col-xs\">N</div>\n        <div class=\"col-xs\">G</div>\n        <div class=\"col-xs\">O</div>\n    </div>\n    <div class=\"row text-xs-center term-row\" v-for=\"i in [0,1,2,3,4]\">\n        <term v-for=\"term in row(i)\" :term=\"term\" :readonly=\"user.submitted_at\"></term>\n    </div>\n    <br>\n    <button class=\"btn btn-block btn-lg btn-primary\" id=\"bingoButton\" v-show=\"!user.submitted_at\" @click=\"bingo\">BINGO!</button>\n    <div class=\"alert alert-info\" v-show=\"user.submitted_at\">\n        Thanks for playing Laracon Bingo! We'll be in touch if you're a winner! Tweet <a href=\"https://twitter.com/artisangoose\" target=\"_blank\">@artisangoose</a> if you've submitted by mistake.\n    </div>\n</div>\n"
+if (module.hot) {(function () {  module.hot.accept()
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), true)
+  if (!hotAPI.compatible) return
+  module.hot.dispose(function () {
+    __vueify_insert__.cache["\n#bingo {\n    margin-top: 65px;\n}\n#bingoButton {\n    background-color: #f4645f;\n    border-color: #d84b46;\n}\n.term-row {\n    margin-bottom: 15px;\n}\n"] = false
+    document.head.removeChild(__vueify_style__)
+  })
+  if (!module.hot.data) {
+    hotAPI.createRecord("_v-67914484", module.exports)
+  } else {
+    hotAPI.update("_v-67914484", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
+  }
+})()}
+},{"./Term.vue":12,"vue":5,"vue-hot-reload-api":2,"vueify/lib/insert-css":6}],11:[function(require,module,exports){
 var __vueify_insert__ = require("vueify/lib/insert-css")
 var __vueify_style__ = __vueify_insert__.insert("\n.navbar-brand>img {\n    max-height: 24px;\n}\n")
 "use strict";
@@ -14763,6 +14816,65 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update("_v-3d3cae2a", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
+},{"vue":5,"vue-hot-reload-api":2,"vueify/lib/insert-css":6}],12:[function(require,module,exports){
+var __vueify_insert__ = require("vueify/lib/insert-css")
+var __vueify_style__ = __vueify_insert__.insert("\n.term {\n    background-color: #ccc;\n    color: #fff;\n    height: 13vh;\n    line-height: 13vh;\n    border-radius: 3px;\n    text-transform: uppercase;\n}\n.term.clickable {\n    cursor: pointer;\n}\n.term.checked {\n    background-color: #f4645f;\n}\n.term.locked {\n    background-image: url('/img/taylor_mug.png');\n    background-position: center center;\n    background-size: cover;\n}\n")
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.default = {
+    props: ['term', 'readonly'],
+    computed: {
+        termClasses: function termClasses() {
+            var classes = '';
+
+            if (this.term.checked) {
+                classes = classes + ' checked';
+            }
+
+            if (this.term.locked) {
+                classes = classes + ' locked';
+            }
+
+            if (!this.readonly) {
+                classes = classes + ' clickable';
+            }
+
+            return classes;
+        }
+    },
+    methods: {
+        toggleChecked: function toggleChecked() {
+            var _this = this;
+
+            if (this.term.locked || this.readonly) {
+                return;
+            }
+
+            this.$http.post('/api/user-term/' + this.term.id + '/toggle').then(function (response) {
+                _this.term = response.json();
+            });
+        }
+    }
+};
+if (module.exports.__esModule) module.exports = module.exports.default
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"col-xs\">\n    <div class=\"term\" :class=\"termClasses\" @click=\"toggleChecked\">\n        {{ term.name }}\n    </div>\n</div>\n"
+if (module.hot) {(function () {  module.hot.accept()
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), true)
+  if (!hotAPI.compatible) return
+  module.hot.dispose(function () {
+    __vueify_insert__.cache["\n.term {\n    background-color: #ccc;\n    color: #fff;\n    height: 13vh;\n    line-height: 13vh;\n    border-radius: 3px;\n    text-transform: uppercase;\n}\n.term.clickable {\n    cursor: pointer;\n}\n.term.checked {\n    background-color: #f4645f;\n}\n.term.locked {\n    background-image: url('/img/taylor_mug.png');\n    background-position: center center;\n    background-size: cover;\n}\n"] = false
+    document.head.removeChild(__vueify_style__)
+  })
+  if (!module.hot.data) {
+    hotAPI.createRecord("_v-007de827", module.exports)
+  } else {
+    hotAPI.update("_v-007de827", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
+  }
+})()}
 },{"vue":5,"vue-hot-reload-api":2,"vueify/lib/insert-css":6}]},{},[9]);
 
-//# sourceMappingURL=admin.js.map
+//# sourceMappingURL=app.js.map

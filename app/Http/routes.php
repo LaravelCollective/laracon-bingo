@@ -11,6 +11,9 @@
 |
 */
 
+use App\UserTerms;
+use Carbon\Carbon;
+
 Route::get('/', function () {
     return view('index');
 })->middleware('auth');
@@ -24,8 +27,8 @@ Route::get('login', function () {
 })->middleware('guest');
 
 Route::group([
-    'prefix'    => 'auth',
-    'namespace' => 'Auth',
+  'prefix'    => 'auth',
+  'namespace' => 'Auth',
 ], function () {
     Route::get('redirect', 'SocialiteController@redirectToProvider')->middleware('guest');
     Route::get('logout', 'SocialiteController@logout')->middleware('auth');
@@ -34,14 +37,23 @@ Route::group([
 });
 
 Route::group([
-    'prefix' => 'api',
-    'middleware' => 'auth',
+  'prefix'     => 'api',
+  'middleware' => 'auth',
 ], function () {
     Route::get('me', function () {
         return auth()->user();
     });
 
-    Route::post('user-term/{term}/toggle', function (App\UserTerms $term) {
+    Route::post('me/bingo', function () {
+        $user = auth()->user();
+
+        $user->submitted_at = Carbon::now();
+        $user->save();
+
+        return $user;
+    });
+
+    Route::post('user-term/{term}/toggle', function (UserTerms $term) {
         if (auth()->user()->id != $term->user_id) {
             abort(403);
         }
@@ -51,8 +63,12 @@ Route::group([
         return $term;
     });
 
+    Route::get('users', 'UsersController@index')
+      ->middleware('can:admin');
+    Route::get('users/{user}', 'UsersController@show')
+      ->middleware('can:admin');
     Route::get('terms', 'TermsController@index')
-        ->middleware('can:admin');
+      ->middleware('can:admin');
     Route::post('terms/{term}/verify', 'TermsController@verify')
-        ->middleware('can:admin');
+      ->middleware('can:admin');
 });

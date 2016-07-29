@@ -1,7 +1,7 @@
 <template>
     <div>
         <nav-bar></nav-bar>
-        <bingo></bingo>
+        <bingo :user.sync="user"></bingo>
     </div>
 </template>
 
@@ -10,6 +10,11 @@ import NavBar from './components/NavBar.vue'
 import Bingo from './components/Bingo.vue'
 
 export default {
+    data() {
+        return {
+            user: window.User
+        }
+    },
     components: {NavBar, Bingo}
 }
 </script>
