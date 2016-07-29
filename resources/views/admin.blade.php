@@ -6,7 +6,7 @@
 
 @section('scripts')
     <script>
-        window.User = {!! auth()->user() !!};
+        window.User = {!! auth()->user()->load('terms.term') !!};
     </script>
     <script src="{{ elixir('js/admin.js') }}"></script>
 @stop

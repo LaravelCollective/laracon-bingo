@@ -37,19 +37,19 @@ class User extends Authenticatable
       //'facebook_id',
     ];
 
-    /**
-     * @var array
-     */
-    protected $appends = [
-      'terms',
-    ];
+    ///**
+    // * @var array
+    // */
+    //protected $appends = [
+    //  'terms',
+    //];
 
-    /**
-     * @var array
-     */
-    protected $with = [
-      'terms.term',
-    ];
+    ///**
+    // * @var array
+    // */
+    //protected $with = [
+    //  'terms.term',
+    //];
 
     /**
      * @var array

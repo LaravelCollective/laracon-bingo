@@ -41,11 +41,16 @@ Route::group([
   'middleware' => 'auth',
 ], function () {
     Route::get('me', function () {
-        return auth()->user();
+        $me = auth()->user();
+
+        $me->load('terms.term');
+
+        return $me;
     });
 
     Route::post('me/bingo', function () {
         $user = auth()->user();
+        $user->load('terms.term');
 
         $user->submitted_at = Carbon::now();
         $user->save();
