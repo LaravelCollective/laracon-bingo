@@ -36,7 +36,7 @@ export default {
     },
     filters: {
         humantime(value) {
-            return moment(value).fromNow()
+            return moment.utc(value).fromNow()
         }
     }
 }
